@@ -1,0 +1,15 @@
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PagesController;
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/auth/redirect', [LoginController::class, 'redirectToGoogle']);
+Route::get('/auth/callback', [LoginController::class, 'handleGoogleCallback']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/calendar', [PagesController::class, 'showCalendar']);
+    Route::get('/email', [PagesController::class, 'showEmail']);
+    Route::get('/todos', [PagesController::class, 'showTodos']);
+});
